@@ -1,6 +1,6 @@
 member(Elemento, Lista).
 forall(Universo, Consecuente).
-findall(Elemento_De_La_Lista, Universo(Elemento_De_La_Lista, BlaBlaBla), Lista_Generada).
+%findall(Elemento_De_La_Lista, Universo(Elemento_De_La_Lista, BlaBlaBla), Lista_Generada).
 length(Lista, Cantidad).
 not(Consulta).
 nombreFunctor(Componente1, Componente2, Componente3, ...).
