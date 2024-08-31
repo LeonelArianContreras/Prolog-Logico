@@ -96,3 +96,4 @@ esCompartido(Continente) :-
     estaEnContinente(Jugador1, Continente),
     estaEnContinente(Jugador2, Continente),
     Jugador1 \= Jugador2.
+
