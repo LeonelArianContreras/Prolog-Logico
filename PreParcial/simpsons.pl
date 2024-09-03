@@ -78,3 +78,4 @@ descendiente(Descendiente, Antecesor) :-
     progenitor(Descendiente, Hijo),
     descendiente(Hijo, Antecesor).
 
+
