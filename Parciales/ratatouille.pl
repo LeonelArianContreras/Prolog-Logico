@@ -34,8 +34,9 @@ restaurante(pizzeriaJeSuis).
 %% Parte 1 %%
 %%%%%%%%%%%%%
 
-estaEnMenu(Plato) :-
-    platoDe(_, Plato, _).
+estaEnMenu(Plato, Restaurante) :-
+    platoDe(Persona, Plato, _),
+    trabajaEn(Persona, Restaurante).
 
 %%%%%%%%%%%%%
 %% Parte 2 %%
@@ -60,12 +61,12 @@ cocinaBien(Cocinante, Plato) :-
 
 chefDe(Persona, Restaurante) :-
     trabajaEn(Persona, Restaurante),
-    buenChef(Persona).
+    buenChef(Persona, Restaurante).
 
-buenChef(Persona) :-
-    forall(platoDe(Persona, Plato, _), cocinaBien(Persona, Plato)).
+buenChef(Persona, Restaurante) :-
+    forall(estaEnMenu(Plato, Restaurante), cocinaBien(Persona, Plato)).
 
-buenChef(Persona) :-
+buenChef(Persona, _) :-
     findall(ExperienciaDeUnPlato, platoDe(Persona, _, ExperienciaDeUnPlato), Experiencias),
     sumlist(Experiencias, ExperienciaTotal),
     ExperienciaTotal >= 20.
@@ -91,13 +92,11 @@ saludable(Plato) :-
     cuantasCaloriasTiene(TipoDeComida, Calorias),
     Calorias < 75.
 
+cuantasCaloriasTiene(entrada(Ingredientes), Calorias) :- length(Ingredientes, CantidadIngredientes), Calorias is 15 * CantidadIngredientes.
 cuantasCaloriasTiene(postre(Calorias), Calorias).
 cuantasCaloriasTiene(principal(ensalada, _), 0).
-cuantasCaloriasTiene(postre(Calorias), Calorias).
-cuantasCaloriasTiene(principal(pure, MinutoDeCoccion), Calorias) :- 
-    sumaDeCalorias(MinutosDeCoccion, 20, Calorias).
-cuantasCaloriasTiene(principal(papasFritas, MinutoDeCoccion), Calorias) :-
-    sumaDeCalorias(MinutosDeCoccion, 50, Calorias).
+cuantasCaloriasTiene(principal(pure, MinutoDeCoccion), Calorias) :- sumaDeCalorias(MinutosDeCoccion, 20, Calorias).
+cuantasCaloriasTiene(principal(papasFritas, MinutoDeCoccion), Calorias) :- sumaDeCalorias(MinutosDeCoccion, 50, Calorias).
 
 sumaDeCalorias(MinutosDeCoccion, CaloriasDeGuarnicion, CaloriasTotales) :-
     CaloriasTotales is (MinutoDeCoccion * 5) + CaloriasDeGuarnicion.
